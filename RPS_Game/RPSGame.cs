@@ -29,7 +29,7 @@ namespace RPS_Game
         {
             Console.WriteLine("Welcome to Rock Paper Scissors Game");
 
-            while (player.Score < 3 && ai.Score < 3)
+            while (playerScore < 3 && aiScore < 3)
             {
                 PlayRound();
             }
@@ -50,48 +50,75 @@ namespace RPS_Game
 
         public string DetermineWinner(string playerChoice, int aiChoice)
         {
-            string[] moves = { "r", "p", "s" };
-            string aiMove = moves[aiChoice];
 
-            Console.WriteLine($"AI chooses {GetMoveName(aiMove)}");
-
-            if (playerChoice == aiMove)
+            if (aiChoice == 0)
             {
-                Console.WriteLine("Tie");
-                return "Tie";
+                Console.WriteLine("AI chooses Rock");
+                switch (playerChoice)
+                {
+                    case "r":
+                        Console.WriteLine("Tie");
+                        return "Tie";
+                        
+                    case "p":
+                        Console.WriteLine("You win this round!");
+                        playerScore++;
+                        return "You win this round!";
+                        
+                    case "s":
+                        Console.WriteLine("You lose");
+                        aiScore++;
+                        return "You lose";
+                        
+                
+                }
             }
-            else if ((playerChoice == "r" && aiMove == "s") ||
-                     (playerChoice == "p" && aiMove == "r") ||
-                     (playerChoice == "s" && aiMove == "p"))
+            else if (aiChoice == 1)
             {
-                Console.WriteLine("You win this round!");
-                playerScore++;
-                return "You win this round!";
-
+                Console.WriteLine("AI chooses Paper");
+                switch (playerChoice)
+                {
+                    case "r":
+                        Console.WriteLine("You lose");
+                        aiScore++;
+                        return "You lose";
+                        
+                    case "p":
+                        Console.WriteLine("Tie");
+                        return "Tie";
+                        
+                    case "s":
+                        Console.WriteLine("You win this round!");
+                        playerScore++;
+                        return "You win this round!";
+                        
+                }
             }
             else
             {
-                Console.WriteLine("You lose");
-                aiScore++;
-                return "You lose";
+                Console.WriteLine("AI chooses Scissors");
+                switch (playerChoice)
+                {
+                    case "r":
+                        Console.WriteLine("You win this round!");
+                        playerScore++;
+                        return "You win this round!";
+                        
+                    case "p":
+                        Console.WriteLine("You lose");
+                        aiScore++;
+                        return "You lose";
+                        
+                    case "s":
+                        Console.WriteLine("Tie");
+                        return "Tie";
+ 
+                }
             }
-            
+            return "Invalid Input";
         }
 
-        private string GetMoveName(string move)
-        {
-            switch (move)
-            {
-                case "r":
-                    return "Rock";
-                case "p":
-                    return "Paper";
-                case "s":
-                    return "Scissors";
-                default:
-                    throw new ArgumentException("Invalid move");
-            }
-        }
+
 
         private void DisplayFinalResults()
         {
